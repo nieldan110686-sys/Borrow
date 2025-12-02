@@ -1,23 +1,15 @@
 {
-  "name": "borrow-nu",
-  "version": "0.1.0",
-  "private": true,
+  "name": "aplikasi-pinjaman",
+  "version": "1.0.0",
+  "description": "Aplikasi catatan pinjaman uang",
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@vercel/postgres": "^0.5.0",
-    "next": "14.0.4",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@vercel/postgres": "^0.5.0"
   }
 }
