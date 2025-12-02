@@ -1,28 +1,15 @@
 import { sql } from '@vercel/postgres';
 
-export async function DELETE(request) {
+export async function DELETE(request: Request) {
   try {
-    const url = new URL(request.url);
-    const id = url.searchParams.get('id');
-
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
     if (!id) {
-      return new Response(JSON.stringify({ error: 'ID tidak ditemukan' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+        return new Response(JSON.stringify({ error: 'ID tidak ditemukan' }), { status: 400 });
     }
-
     await sql`DELETE FROM pinjaman WHERE id = ${id}`;
-
-    return new Response(JSON.stringify({ success: true, message: 'Pinjaman berhasil dihapus.' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(JSON.stringify({ success: true, message: 'Pinjaman berhasil dihapus.' }), { status: 200 });
   } catch (error) {
-    console.error("Failed to delete loan:", error);
-    return new Response(JSON.stringify({ error: 'Gagal menghapus pinjaman' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(JSON.stringify({ error: 'Gagal menghapus pinjaman' }), { status: 500 });
   }
 }
