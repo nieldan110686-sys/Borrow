@@ -1,0 +1,234 @@
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --surface-color-hover: #2a2a2a;
+    --primary-color: #6366f1;
+    --primary-color-hover: #5558e3;
+    --success-color: #22c55e;
+    --danger-color: #ef4444;
+    --danger-color-hover: #dc2626;
+    --text-primary: #e5e5e5;
+    --text-secondary: #a3a3a3;
+    --border-color: #333333;
+    --font-family: 'Poppins', sans-serif;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.card {
+    background-color: var(--surface-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-color-hover);
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.summary-card {
+    text-align: center;
+    border-left: 4px solid var(--success-color);
+}
+
+.summary-card h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.summary-card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+/* Table Styles */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+#tabelPinjaman {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabelPinjaman th,
+#tabelPinjaman td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#tabelPinjaman th {
+    background-color: var(--surface-color-hover);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+#tabelPinjaman tbody tr {
+    transition: background-color 0.2s;
+}
+
+#tabelPinjaman tbody tr:hover {
+    background-color: var(--surface-color-hover);
+}
+
+#tabelPinjaman tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem auto;
+    }
+    
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    #tabelPinjaman th, #tabelPinjaman td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+}
