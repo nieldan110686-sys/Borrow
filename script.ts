@@ -1,22 +1,33 @@
+// Tunggu hingga seluruh konten HTML dimuat sebelum menjalankan skrip
 document.addEventListener('DOMContentLoaded', () => {
-    const formPinjaman = document.getElementById('formPinjaman');
-    const daftarPinjamanBody = document.getElementById('daftarPinjaman');
-    const noDataMessage = document.getElementById('noDataMessage');
 
-    // Elemen untuk ringkasan
-    const totalPinjamanIDREl = document.getElementById('totalPinjamanIDR');
-    const totalBungaIDREl = document.getElementById('totalBungaIDR');
-    const totalPinjamanTHBEl = document.getElementById('totalPinjamanTHB');
-    const totalBungaTHBEl = document.getElementById('totalBungaTHB');
+    // --- 1. Inisialisasi Elemen DOM ---
+    // Mendapatkan referensi ke elemen-elemen HTML yang akan dimanipulasi
+    const formPinjaman = document.getElementById('formPinjaman') as HTMLFormElement;
+    const daftarPinjamanBody = document.getElementById('daftarPinjaman') as HTMLTableSectionElement;
+    const noDataMessage = document.getElementById('noDataMessage') as HTMLParagraphElement;
 
-    // === INI ADALAH PENGENALAN API YANG AKAN DIPANGGIL ===
-    // Vercel akan otomatis mengarahkan permintaan ini ke file di folder /api
+    // Elemen untuk menampilkan ringkasan keuangan
+    const totalPinjamanIDREl = document.getElementById('totalPinjamanIDR') as HTMLParagraphElement;
+    const totalBungaIDREl = document.getElementById('totalBungaIDR') as HTMLParagraphElement;
+    const totalPinjamanTHBEl = document.getElementById('totalPinjamanTHB') as HTMLParagraphElement;
+    const totalBungaTHBEl = document.getElementById('totalBungaTHB') as HTMLParagraphElement;
+
+    // --- 2. Konfigurasi URL API ---
+    // URL endpoint yang akan dipanggil. Vercel akan otomatis mengarahkan ini ke file yang sesuai di folder /api.
     const API_URL_GET = '/api/get';
     const API_URL_ADD = '/api/add';
     const API_URL_DELETE = '/api/delete';
 
-    // Fungsi untuk memformat mata uang
-    function formatCurrency(amount, currency) {
+    // --- 3. Fungsi Pembantu ---
+
+    /**
+     * Memformat angka menjadi string mata uang yang mudah dibaca.
+     * @param amount - Jumlah uang.
+     * @param currency - Kode mata uang ('IDR' atau 'THB').
+     * @returns String mata uang yang sudah diformat.
+     */
+    function formatCurrency(amount: number, currency: string): string {
         if (currency === 'IDR') {
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -29,26 +40,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 currency: 'THB'
             }).format(amount);
         }
-        return amount;
+        return amount.toString();
     }
 
-    // Fungsi untuk mengambil semua data pinjaman dari API
-    async function fetchPinjaman() {
+    // --- 4. Fungsi-Fungsi Utama ---
+
+    /**
+     * Mengambil semua data pinjaman dari server API.
+     */
+    async function fetchPinjaman(): Promise<void> {
         try {
-            const response = await fetch(API_URL_GET); // Memanggil API /api/get
-            if (!response.ok) throw new Error('Network response was not ok');
+            const response = await fetch(API_URL_GET);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const pinjaman = await response.json();
             renderTabelPinjaman(pinjaman);
             updateRingkasan(pinjaman);
         } catch (error) {
             console.error('Gagal mengambil data:', error);
+            // Tampilkan pesan error di tabel jika gagal memuat data
             daftarPinjamanBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">Gagal memuat data. Periksa koneksi dan konfigurasi server.</td></tr>`;
         }
     }
 
-    // Fungsi untuk menampilkan data di tabel
-    function renderTabelPinjaman(pinjaman) {
-        daftarPinjamanBody.innerHTML = '';
+    /**
+     * Menampilkan data pinjaman ke dalam tabel HTML.
+     * @param pinjaman - Array objek pinjaman.
+     */
+    function renderTabelPinjaman(pinjaman: any[]): void {
+        daftarPinjamanBody.innerHTML = ''; // Kosongkan tabel terlebih dahulu
         if (pinjaman.length === 0) {
             noDataMessage.style.display = 'block';
             return;
@@ -73,8 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fungsi untuk memperbarui ringkasan keuangan
-    function updateRingkasan(pinjaman) {
+    /**
+     * Memperbarui kartu ringkasan keuangan berdasarkan data pinjaman.
+     * @param pinjaman - Array objek pinjaman.
+     */
+    function updateRingkasan(pinjaman: any[]): void {
         let totalPinjamanIDR = 0, totalBungaIDR = 0;
         let totalPinjamanTHB = 0, totalBungaTHB = 0;
 
@@ -95,14 +119,17 @@ document.addEventListener('DOMContentLoaded', () => {
         totalBungaTHBEl.textContent = formatCurrency(totalBungaTHB, 'THB');
     }
 
-    // Event listener untuk form tambah pinjaman
-    formPinjaman.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    // --- 5. Event Listener ---
 
-        const namaPeminjam = document.getElementById('namaPeminjam').value;
-        const jumlahPinjaman = parseFloat(document.getElementById('jumlahPinjaman').value);
-        const mataUang = document.getElementById('mataUang').value;
-        const tingkatBunga = parseFloat(document.getElementById('tingkatBunga').value);
+    // Event listener untuk form tambah pinjaman
+    formPinjaman.addEventListener('submit', async (e: Event) => {
+        e.preventDefault(); // Mencegah form reload halaman
+
+        // Ambil nilai dari form
+        const namaPeminjam = (document.getElementById('namaPeminjam') as HTMLInputElement).value;
+        const jumlahPinjaman = parseFloat((document.getElementById('jumlahPinjaman') as HTMLInputElement).value);
+        const mataUang = (document.getElementById('mataUang') as HTMLSelectElement).value;
+        const tingkatBunga = parseFloat((document.getElementById('tingkatBunga') as HTMLSelectElement).value);
 
         const dataPinjaman = {
             nama_peminjam: namaPeminjam,
@@ -112,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch(API_URL_ADD, { // Memanggil API /api/add
+            const response = await fetch(API_URL_ADD, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             if (response.ok) {
                 alert('Pinjaman berhasil ditambahkan!');
-                formPinjaman.reset();
-                fetchPinjaman();
+                formPinjaman.reset(); // Kosongkan form
+                fetchPinjaman(); // Ambil data terbaru
             } else {
                 alert('Gagal menambahkan pinjaman: ' + (result.error || 'Terjadi kesalahan tidak diketahui.'));
             }
@@ -133,17 +160,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fungsi untuk menghapus pinjaman
-    window.hapusPinjaman = async function(id) {
+    /**
+     * Fungsi untuk menghapus pinjaman.
+     * Dibuat global (window.hapusPinjaman) agar bisa dipanggil dari atribut onclick di HTML.
+     * @param id - ID pinjaman yang akan dihapus.
+     */
+    window.hapusPinjaman = async function(id: number) {
         if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
             try {
-                const response = await fetch(`${API_URL_DELETE}?id=${id}`, { // Memanggil API /api/delete
+                const response = await fetch(`${API_URL_DELETE}?id=${id}`, {
                     method: 'DELETE'
                 });
                 const result = await response.json();
                 if (response.ok) {
                     alert('Pinjaman berhasil dihapus.');
-                    fetchPinjaman();
+                    fetchPinjaman(); // Ambil data terbaru
                 } else {
                     alert('Gagal menghapus pinjaman: ' + (result.error || 'Terjadi kesalahan tidak diketahui.'));
                 }
@@ -154,6 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- 6. Inisialisasi Awal ---
     // Ambil data pertama kali saat halaman dimuat
     fetchPinjaman();
+
 });
