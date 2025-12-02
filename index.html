@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Catatan Pinjaman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Catatan Pinjaman Uang</h1>
+            <p>Kelola peminjaman Rupiah dan Baht dengan mudah.</p>
+        </header>
+
+        <main>
+            <!-- Form untuk menambah pinjaman -->
+            <section class="card form-card">
+                <h2>Tambah Pinjaman Baru</h2>
+                <form id="formPinjaman">
+                    <div class="form-group">
+                        <label for="namaPeminjam">Nama Peminjam</label>
+                        <input type="text" id="namaPeminjam" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jumlahPinjaman">Jumlah Pinjaman</label>
+                            <input type="number" id="jumlahPinjaman" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mataUang">Mata Uang</label>
+                            <select id="mataUang" required>
+                                <option value="IDR">Rupiah (IDR)</option>
+                                <option value="THB">Baht Thailand (THB)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tingkatBunga">Tingkat Bunga</label>
+                            <select id="tingkatBunga" required>
+                                <option value="10">10% / bulan</option>
+                                <option value="20">20% / bulan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tambah Pinjaman</button>
+                </form>
+            </section>
+
+            <!-- Ringkasan Keuangan -->
+            <section class="summary-grid">
+                <div class="card summary-card">
+                    <h3>Total Pinjaman (IDR)</h3>
+                    <p id="totalPinjamanIDR">Rp 0</p>
+                </div>
+                <div class="card summary-card">
+                    <h3>Total Bunga/Bulan (IDR)</h3>
+                    <p id="totalBungaIDR">Rp 0</p>
+                </div>
+                <div class="card summary-card">
+                    <h3>Total Pinjaman (THB)</h3>
+                    <p id="totalPinjamanTHB">฿ 0</p>
+                </div>
+                <div class="card summary-card">
+                    <h3>Total Bunga/Bulan (THB)</h3>
+                    <p id="totalBungaTHB">฿ 0</p>
+                </div>
+            </section>
+
+            <!-- Daftar Pinjaman -->
+            <section class="card">
+                <h2>Daftar Pinjaman Aktif</h2>
+                <div class="table-wrapper">
+                    <table id="tabelPinjaman">
+                        <thead>
+                            <tr>
+                                <th>Nama Peminjam</th>
+                                <th>Jumlah Pinjaman</th>
+                                <th>Bunga</th>
+                                <th>Total (Pokok + Bunga/Bln)</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="daftarPinjaman">
+                            <!-- Data akan dimuat di sini oleh JavaScript -->
+                        </tbody>
+                    </table>
+                     <p id="noDataMessage" style="display: none; text-align: center; padding: 20px; color: #777;">Belum ada data pinjaman.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
