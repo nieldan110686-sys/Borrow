@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Catatan Pinjaman</title>
+    <title>Catatan Pinjaman - Borrow Nu</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,23 +13,28 @@
 
     <div class="container">
         <header>
-            <h1>Catatan Pinjaman Uang</h1>
-            <p>Kelola peminjaman Rupiah dan Baht dengan mudah.</p>
+            <h1>Borrow Nu</h1>
+            <p>Pantau peminjaman Rupiah dan Baht Anda dengan mudah.</p>
         </header>
 
         <main>
             <!-- Form untuk menambah pinjaman -->
             <section class="card form-card">
-                <h2>Tambah Pinjaman Baru</h2>
+                <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Tambah Pinjaman Baru
+                </h2>
                 <form id="formPinjaman">
                     <div class="form-group">
                         <label for="namaPeminjam">Nama Peminjam</label>
-                        <input type="text" id="namaPeminjam" required>
+                        <input type="text" id="namaPeminjam" placeholder="Masukkan nama lengkap" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="jumlahPinjaman">Jumlah Pinjaman</label>
-                            <input type="number" id="jumlahPinjaman" step="0.01" min="0" required>
+                            <input type="number" id="jumlahPinjaman" step="0.01" min="0" placeholder="0" required>
                         </div>
                         <div class="form-group">
                             <label for="mataUang">Mata Uang</label>
@@ -46,7 +51,12 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Tambah Pinjaman</button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Tambah Pinjaman
+                    </button>
                 </form>
             </section>
 
@@ -57,7 +67,7 @@
                     <p id="totalPinjamanIDR">Rp 0</p>
                 </div>
                 <div class="card summary-card">
-                    <h3>Total Bunga/Bulan (IDR)</h3>
+                    <h3>Estimasi Bunga/Bln (IDR)</h3>
                     <p id="totalBungaIDR">Rp 0</p>
                 </div>
                 <div class="card summary-card">
@@ -65,22 +75,28 @@
                     <p id="totalPinjamanTHB">฿ 0</p>
                 </div>
                 <div class="card summary-card">
-                    <h3>Total Bunga/Bulan (THB)</h3>
+                    <h3>Estimasi Bunga/Bln (THB)</h3>
                     <p id="totalBungaTHB">฿ 0</p>
                 </div>
             </section>
 
-            <!-- Daftar Pinjaman -->
+            <!-- Riwayat Peminjaman -->
             <section class="card">
-                <h2>Daftar Pinjaman Aktif</h2>
+                <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Riwayat Peminjaman
+                </h2>
                 <div class="table-wrapper">
                     <table id="tabelPinjaman">
                         <thead>
                             <tr>
-                                <th>Nama Peminjam</th>
-                                <th>Jumlah Pinjaman</th>
+                                <th>Peminjam</th>
+                                <th>Jumlah</th>
                                 <th>Bunga</th>
-                                <th>Total (Pokok + Bunga/Bln)</th>
+                                <th>Total/Bulan</th>
+                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -88,7 +104,7 @@
                             <!-- Data akan dimuat di sini oleh JavaScript -->
                         </tbody>
                     </table>
-                     <p id="noDataMessage" style="display: none; text-align: center; padding: 20px; color: #777;">Belum ada data pinjaman.</p>
+                     <p id="noDataMessage" style="display: none; text-align: center; padding: 40px; color: var(--text-secondary);">Belum ada data pinjaman. Tambahkan pinjaman baru untuk memulai.</p>
                 </div>
             </section>
         </main>
